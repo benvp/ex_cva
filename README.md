@@ -12,7 +12,7 @@ This is an example using CVA with a Phoenix function component.
 defmodule MyAppWeb.SettingsLive do
   use MyAppWeb, :live_view
 
-  import CVA.LiveView
+  use CVA.Component
 
   def mount(_params, _session, socket) do
     {:ok, socket}
