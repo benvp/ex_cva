@@ -8,37 +8,36 @@ defmodule CVA do
     |> Enum.join(" ")
   end
 
-  def cva(config), do: cva("", config)
+  def cva(%{__cva__: cva_config} = assigns), do: cva("", cva_config, assigns)
 
-  def cva(base, config) when is_list(config) do
+  def cva(base, %{__cva__: cva_config} = assigns), do: cva(base, cva_config, assigns)
+
+  def cva(config, props), do: cva("", config, props)
+
+  def cva(base, config, props) when is_list(config) do
     cva(
       base,
-      Enum.into(config, %{variants: nil, compound_variants: nil, default_variants: nil})
+      Enum.into(config, %{variants: nil, compound_variants: nil, default_variants: nil}),
+      props
     )
   end
 
-  def cva(base, %{variants: nil}) do
-    fn props ->
-      cx([base, props[:class]])
-    end
-  end
+  def cva(base, %{variants: nil}, props), do: cx([base, props[:class]])
 
-  def cva(base, config) do
-    fn props ->
-      cx([
-        base,
-        variant_class_names(config, props),
-        compound_variant_class_names(config, props),
-        props[:class]
-      ])
-    end
+  def cva(base, config, props) do
+    cx([
+      base,
+      variant_class_names(config, props),
+      compound_variant_class_names(config, props),
+      props[:class]
+    ])
   end
 
   defp variant_class_names(_config, %{variants: nil}), do: []
 
   defp variant_class_names(config, props) do
     config[:variants]
-    |> Map.keys()
+    |> Keyword.keys()
     |> Enum.map(fn variant ->
       if Map.has_key?(props, variant) && props[variant] == nil do
         nil
@@ -63,8 +62,8 @@ defmodule CVA do
     if compound_variants do
       compound_variants
       |> Enum.reduce([], fn compound_variant, acc ->
-        {class, compound} = Map.pop(compound_variant, :class)
-        props_with_default = Map.merge(config[:default_variants] || %{}, props)
+        {class, compound} = Keyword.pop(compound_variant, :class)
+        props_with_default = Keyword.merge(config[:default_variants] || [], props)
 
         if compound == props_with_default do
           [class | acc]
