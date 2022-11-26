@@ -1,11 +1,8 @@
 ![CVA](/.github/assets/meta.png)
 
-<h1 align="center">
-cva for elixir
-<span align="center" style="display: block; font-size: 14px; margin: 8px 0">Easily construct classes with variant definitions.</span>
-</h1>
+<h1 align="center">cva for elixir</h1>
 
-<p align="center">Class Variance Authority for Elixir</p>
+<p align="center">Class Variance Authority for Elixir - easily construct classes with variant definitions.</p>
 
 <p align="center">
   <a href="https://hexdocs.pm/cva">
