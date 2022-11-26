@@ -1,6 +1,6 @@
 locals_without_parens = [
   variant: 3,
-  compound_variant: 3
+  compound_variant: 2
 ]
 
 # Used by "mix format"

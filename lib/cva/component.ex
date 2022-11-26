@@ -5,12 +5,12 @@ defmodule CVA.Component do
   The `variant/3` and `compound_variant/2` macros allow easy definition of variants and compound
   variants for a component. This also includes compile time checks for the specified variants.
 
-  When using this module, please make sure that you add include :ex_cwa to your imports in
-  `formatter.exs`.
+  When using this module, please make sure that you add include :cva to your imports in
+  `.formatter.exs`.
 
   ```elixir
   [
-    import_deps: [:ex_cwa],
+    import_deps: [:cva],
   ]
   ```
 
