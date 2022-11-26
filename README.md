@@ -1,72 +1,108 @@
 # Class Variance Authority for Elixir
 
-This is a port of the awesome [`cva`](https://github.com/joe-bell/cva) JavaScript library.
+Easily construct classes with variant definitions.
 
-There hasn't been any initial release yet. It's a work in progress.
+## Introduction
 
-## Example
+Building out core HEEx function components like `button`, `heading`, `link` in general requires
+some way to distinguish between different appearances of the component. This is generally achieved
+by concatenating class strings or by extracting them into separate functions. In addition, maintaining proper definitions of supported `attr` `:value` options is required.
 
-This is an example using CVA with a Phoenix function component.
+`ex_cva` aims to make this process convenient by providing a clean and maintainable way to define component variants.
+
+## Usage with HEEx function components
+
+Configure a few variants with defaults and optionally add compound variants. CVA will take care of creating the proper class names.
+
+One more goodie: it even creates compile-time checks for your variants to make sure all required
+variants are applied and contain correct values (thanks to `Phoenix.Component.attr/3`).
 
 ```elixir
-defmodule MyAppWeb.SettingsLive do
-  use MyAppWeb, :live_view
-
+defmodule MyWeb.Components do
   use CVA.Component
 
-  def mount(_params, _session, socket) do
-    {:ok, socket}
-  end
-
-  def render(assigns) do
-    ~H"""
-    <div class="space-y-8 pt-12 px-12">
-      <div class="flex space-x-4">
-        <.button intent="primary" size="xs">Click me</.button>
-        <.button intent="primary" size="sm">Click me</.button>
-        <.button intent="secondary" size="md">Click me</.button>
-        <.button intent="secondary" size="lg">Click me</.button>
-        <.button intent="secondary" size="xl">Click me</.button>
-      </div>
-    </div>
-    """
-  end
-
-
-  attr_cva(
-    variants: [
-      intent: [
-        primary: "bg-cyan-600",
-        secondary: "bg-zinc-700",
-        destructive: "bg-red-500"
-      ],
-      size: [
-        xs: "rounded px-2.5 py-1.5 text-xs",
-        sm: "rounded-md px-3 py-2 text-sm",
-        md: "rounded-md px-4 py-2 text-sm",
-        lg: "rounded-md px-4 py-2 text-base",
-        xl: "rounded-md px-6 py-3 text-base"
-      ]
+  variant :intent, [
+      primary: "bg-cyan-600",
+      secondary: "bg-zinc-700",
+      destructive: "bg-red-500"
     ],
-    default_variants: [
-      intent: :primary
-    ]
-  )
+    default: :secondary
 
-  attr :rest, :global, default: %{}
+  variant :size, [
+      xs: "rounded px-2.5 py-1.5 text-xs",
+      sm: "rounded-md px-3 py-2 text-sm",
+      md: "rounded-md px-4 py-2 text-sm",
+      lg: "rounded-md px-4 py-2 text-base",
+      xl: "rounded-md px-6 py-3 text-base"
+    ],
+    default: :md
+
+  compound_variant "uppercase", intent: :primary, size: :xl
+
+  attr :rest, :global
   slot :inner_block
 
   def button(assigns) do
-    assigns = assign_cva(assigns)
-
     ~H"""
-    <button class={@class} {@rest}><%= render_slot(@inner_block) %></button>
+    <button class={@cva_class} {@rest}><%= render_slot(@inner_block) %></button>
     """
   end
 end
+
+defmodule MyWeb.SomeLive do
+  import MyWeb.Components
+
+  def render(assigns) do
+    ~H"""
+    <.button intent="primary">Click me</.button>
+    """
+  end
+end
+```
+
+## Raw `cva` usage
+
+Even though `ex_cva` shines when working with function components, you can still use the raw `cva` function to generate classes.
+
+```elixir
+defmodule MyCVA do
+  import CVA
+
+  def button(props) do
+    config = [
+      variants: [
+        intent: [
+          primary: "bg-cyan-600",
+          secondary: "bg-zinc-700",
+          destructive: "bg-red-500"
+        ],
+        size: [
+          xs: "rounded px-2.5 py-1.5 text-xs",
+          sm: "rounded-md px-3 py-2 text-sm",
+          md: "rounded-md px-4 py-2 text-sm",
+          lg: "rounded-md px-4 py-2 text-base",
+          xl: "rounded-md px-6 py-3 text-base"
+        ]
+      ]
+    ]
+
+    cva(config, props)
+  end
+end
+
+button(intent: :primary, size: :md) # -> "bg-cyan-600 rounded-md px-4 py-2 text-sm"
 ```
 
 ## Acknowledgements
 
 - [**cva**](https://github.com/joe-bell/cva) ([Joe Bell](https://github.com/joe-bell))
   Thank you for providing the JavaScript implementation. It inspired me to port this over to Elixir.
+
+## Contributing
+
+Contributions are very welcome. To get it up on your local machine, just check out the repo and run
+
+```bash
+mix deps.get
+mix test
+```
