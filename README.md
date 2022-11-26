@@ -1,6 +1,24 @@
-# Class Variance Authority for Elixir
+![CVA](/.github/assets/meta.png)
 
-Easily construct classes with variant definitions.
+<h1 align="center">
+cva for elixir
+<span align="center" style="display: block; font-size: 14px; margin: 8px 0">Easily construct classes with variant definitions.</span>
+</h1>
+
+<p align="center">Class Variance Authority for Elixir</p>
+
+<p align="center">
+  <a href="https://hexdocs.pm/cva">
+    <img alt="Documentation" src="https://img.shields.io/badge/documentation-gray" />
+  </a>
+  <a href="https://hex.pm/packages/cva">
+    <img alt="hex" src="https://img.shields.io/hexpm/v/cva.svg" />
+  </a>
+  <a href="https://twitter.com/benvp_">
+    <img alt="Follow @benvp_ on Twitter" src="https://img.shields.io/twitter/follow/benvp_.svg?style=social&label=Follow" />
+  </a>
+</p>
+
 
 ## Introduction
 
@@ -96,7 +114,7 @@ button(intent: :primary, size: :md) # -> "bg-cyan-600 rounded-md px-4 py-2 text-
 ## Acknowledgements
 
 - [**cva**](https://github.com/joe-bell/cva) ([Joe Bell](https://github.com/joe-bell))
-  Thank you for providing the JavaScript implementation. It inspired me to port this over to Elixir.
+  Thank you for providing the JavaScript implementation. It inspired me to port this over to Elixir. I hope you don't mind that I hijacked your logo. If you are not feeling well about that, feel free to shoot me a message.
 
 ## Contributing
 
