@@ -2,15 +2,11 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - name: "Phoenix Dev Server"
+  - name: "IEx Shell"
     init: |
-      mix setup
+      mix deps.get
       mix compile
-    command: iex -S mix phx.server
-
-ports:
-  - port: 4000
-    onOpen: open-preview
+    command: iex -S mix
 
 vscode:
   extensions:
