@@ -1,5 +1,6 @@
 locals_without_parens = [
   variant: 3,
+  variant: 2,
   compound_variant: 2
 ]
 
