@@ -1,0 +1,15 @@
+image:
+  file: .gitpod.Dockerfile
+
+tasks:
+  - name: "IEx Shell"
+    init: |
+      mix deps.get
+      mix compile
+    command: iex -S mix
+
+vscode:
+  extensions:
+    - bradlc.vscode-tailwindcss
+    - benvp.vscode-hex-pm-intellisense
+    - victorbjorklund.phoenix
