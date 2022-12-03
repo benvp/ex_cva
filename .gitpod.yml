@@ -1,0 +1,19 @@
+image:
+  file: .gitpod.Dockerfile
+
+tasks:
+  - name: "Phoenix Dev Server"
+    init: |
+      mix setup
+      mix compile
+    command: iex -S mix phx.server
+
+ports:
+  - port: 4000
+    onOpen: open-preview
+
+vscode:
+  extensions:
+    - bradlc.vscode-tailwindcss
+    - benvp.vscode-hex-pm-intellisense
+    - victorbjorklund.phoenix

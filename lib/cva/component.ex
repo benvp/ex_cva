@@ -255,6 +255,7 @@ defmodule CVA.Component do
       for {name, %{kind: kind, config: config}} <- configs do
         body =
           quote do
+            # TODO: pick only variant assigns from assigns, otherwise we'll accidentally merge e.g. "class"
             assigns = Phoenix.Component.assign(assigns, :cva_class, cva(unquote(config), assigns))
             super(assigns)
           end
