@@ -25,6 +25,18 @@ by concatenating class strings or by extracting them into separate functions. In
 
 `ex_cva` aims to make this process convenient by providing a clean and maintainable way to define component variants.
 
+## Installation
+
+Add the `cva` dependency to your `mix.exs` file.
+
+```elixir
+def deps do
+  [
+    {:cva, "~> 0.1"}
+  ]
+end
+```
+
 ## Usage with HEEx function components
 
 Configure a few variants with defaults and optionally add compound variants. CVA will take care of creating the proper class names.
@@ -34,6 +46,7 @@ variants are applied and contain correct values (thanks to `Phoenix.Component.at
 
 ```elixir
 defmodule MyWeb.Components do
+  use Phoenix.Component
   use CVA.Component
 
   variant :intent, [
