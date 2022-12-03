@@ -253,10 +253,19 @@ defmodule CVA.Component do
 
     names_and_defs =
       for {name, %{kind: kind, config: config}} <- configs do
+        variant_names = for {name, _} <- config[:variants], do: name
+
         body =
           quote do
-            # TODO: pick only variant assigns from assigns, otherwise we'll accidentally merge e.g. "class"
-            assigns = Phoenix.Component.assign(assigns, :cva_class, cva(unquote(config), assigns))
+            cva_props = Map.take(assigns, unquote(variant_names))
+
+            assigns =
+              Phoenix.Component.assign(
+                assigns,
+                :cva_class,
+                cva(unquote(config), cva_props)
+              )
+
             super(assigns)
           end
 
