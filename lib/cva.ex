@@ -131,6 +131,9 @@ defmodule CVA do
   Props define the variants to be applied. Each key in the props list must be a variant name.
   Values can either be an atom or a string.
 
+  ### Special props
+
+    * `:class` - A class string or list of classes. This class is applied last.
   """
   def cva(base, config, props) do
     cx([
