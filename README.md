@@ -32,7 +32,7 @@ Add the `cva` dependency to your `mix.exs` file.
 ```elixir
 def deps do
   [
-    {:cva, "~> 0.1"}
+    {:cva, "~> 0.2"}
   ]
 end
 ```
