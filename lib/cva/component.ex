@@ -75,7 +75,7 @@ defmodule CVA.Component do
     * `name` - an atom defining the name of the attribute. Note that attributes cannot define the
     same name as any other attributes or slots or attributes declared for the same component.
 
-    * `variants` - a keyword list of variants.
+    * `variants` - a keyword list of variants. Supported variant values are strings and a list of strings.
 
     * `opts` - a keyword list of options. Defaults to `[]`.
 
@@ -198,18 +198,30 @@ defmodule CVA.Component do
     values =
       variants
       |> Keyword.keys()
-      |> Enum.map(&Atom.to_string/1)
+      |> Enum.map(fn
+        v when is_boolean(v) -> v
+        v -> Atom.to_string(v)
+      end)
 
-    cva_opts = [values: values]
+    cva_opts = [values: values ++ [nil]]
 
     cva_opts =
-      if opts[:default] != nil,
-        do: Keyword.put(cva_opts, :default, Atom.to_string(opts[:default])),
-        else: Keyword.put(cva_opts, :required, true)
+      cond do
+        is_boolean(opts[:default]) -> Keyword.put(cva_opts, :default, opts[:default])
+        opts[:default] != nil -> Keyword.put(cva_opts, :default, Atom.to_string(opts[:default]))
+        true -> cva_opts
+      end
 
     opts = Keyword.merge(opts, cva_opts)
 
-    [name, :string, opts]
+    type =
+      cond do
+        Enum.all?(values, &is_boolean/1) -> :boolean
+        Enum.all?(values, &is_binary/1) -> :string
+        true -> :any
+      end
+
+    [name, type, opts]
   end
 
   def __on_definition__(env, kind, name, _args, _guards, _body) do

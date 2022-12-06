@@ -162,6 +162,10 @@ defmodule CVA do
             p -> p
           end || default_variant_prop
 
+        # In case we receive nil, convert it to false to properly support
+        # boolean variants. E.g. `disabled: [true: "i-am-disabled"]`
+        variant_key = if variant_key, do: variant_key, else: false
+
         config[:variants][variant][variant_key]
       end
     end)
