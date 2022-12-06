@@ -116,7 +116,7 @@ defmodule CVA.Component do
   defmacro variant(name, variants, opts \\ [])
            when is_atom(name) and is_list(variants) and is_list(opts) do
     quote do
-      if Module.get_attribute(__MODULE__, :__cva_variant_called__) do
+      unless Module.get_attribute(__MODULE__, :__cva_variant_called__) do
         attr(:cva_class, :string, default: nil)
       end
 
