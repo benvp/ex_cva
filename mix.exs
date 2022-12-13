@@ -54,7 +54,7 @@ defmodule CVA.MixProject do
       },
       files:
         ~w(lib) ++
-          ~w(CHANGELOG.md LICENSE.md mix.exs README.md)
+          ~w(CHANGELOG.md LICENSE.md mix.exs README.md .formatter.exs)
     ]
   end
 end
