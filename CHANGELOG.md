@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.2.0] (2022-04-06)
+
+## Improvements
+
+* Add `.formatter.exs` to files to allow `import_deps: [:cva]`.
+
 ## [v0.2.0] (2022-12-06)
 
 ### Improvements
@@ -12,13 +18,13 @@ All notable changes to this project will be documented in this file.
 variant :disabled,
         [true: "disabled-class", false: "enabled-class"],
         default: false
-        
+
 # or
 
 variant :disabled,
         [true: "disabled-class"],
         default: nil
-        
+
 def button(assigns) do
   ~H"""
   <button class={@cva_class} disabled={@disabled}>
@@ -26,10 +32,10 @@ def button(assigns) do
   </button>
   """
 end
-        
+
 # ... where you use that component
 
-<.button disabled>Click me</.button> 
+<.button disabled>Click me</.button>
 
 # -> <button class="disabled-class" disabled>Click me</button>
 ```
