@@ -1,7 +1,7 @@
 defmodule CVA.MixProject do
   use Mix.Project
 
-  @version "0.2.1"
+  @version "0.2.2"
 
   def project do
     [
@@ -31,8 +31,8 @@ defmodule CVA.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:phoenix_live_view, "~> 0.18"},
-      {:ex_doc, "~> 0.29", only: :dev, runtime: false}
+      {:phoenix_live_view, ">= 0.18.0"},
+      {:ex_doc, "~> 0.35", only: :dev, runtime: false}
     ]
   end
 
