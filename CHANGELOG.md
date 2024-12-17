@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v0.2.2] (2024-12-17)
+
+## Changed
+
+* Update required phoenix_live_view version to also support Phoenix LiveView 1.0.
+
 ## [v0.2.0] (2022-04-06)
 
 ## Improvements
